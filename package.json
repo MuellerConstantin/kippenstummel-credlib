@@ -8,8 +8,10 @@
   },
   "private": true,
   "license": "AGPL-3.0-only",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
+    "prepare": "npm run build",
     "clean": "rimraf -rf dist",
     "lint": "eslint src --ext .ts",
     "format": "prettier --write \"src/**/*.ts\"",
