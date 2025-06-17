@@ -1,0 +1,25 @@
+{
+  "name": "@kippenstummel/credlib",
+  "version": "0.1.0",
+  "description": "Utility library for Kippenstummel's credibility calculations.",
+  "author": {
+    "name": "Constantin Müller",
+    "email": "info@mueller-constantin.de"
+  },
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf -rf dist",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\""
+  },
+  "devDependencies": {
+    "eslint": "^9.29.0",
+    "eslint-config-prettier": "^10.1.5",
+    "prettier": "^3.5.3",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.34.1"
+  }
+}
