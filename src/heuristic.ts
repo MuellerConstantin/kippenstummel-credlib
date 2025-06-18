@@ -49,7 +49,7 @@ export function computeCredibility(
 }
 
 export function evalUnrealisticMovementCountPenalty(info: BehaviourInfo) {
-  const MAX_PENALTY = 40;
+  const MAX_PENALTY = 50;
   const count = info.unrealisticMovementCount;
   return -Math.min(Math.round(Math.pow(count, 2)), MAX_PENALTY);
 }
@@ -75,7 +75,7 @@ export function evalInteractionFrequencyPenalty(info: BehaviourInfo) {
    * when the identity is 30 minutes old. After that, the penalty impact grows rapidly.
    */
 
-  const logisticWeight = 1 / (1 + Math.exp(-0.2 * (identityAgeMinutes - 60)));
+  const logisticWeight = 1 / (1 + Math.exp(-0.1 * (identityAgeMinutes - 60)));
 
   const penalty = penaltyForAverageInterval(
     info.averageInteractionInterval,
@@ -199,6 +199,8 @@ export function evalIdentityAgePenalty(info: BehaviourInfo) {
 }
 
 export function evalUnrealisticVotingBehaviourPenalty(info: BehaviourInfo) {
+  const MAX_PENALTY = 25;
+
   const ageInDaysRaw =
     (Date.now() - info.issuedAt?.getTime?.()) / (1000 * 60 * 60 * 24);
 
@@ -208,7 +210,10 @@ export function evalUnrealisticVotingBehaviourPenalty(info: BehaviourInfo) {
 
   if (averageVotesPerDay < 0.5) return 0;
 
-  return -Math.round(Math.pow(averageVotesPerDay, 2) * 10);
+  return -Math.min(
+    Math.round(Math.pow(averageVotesPerDay, 2) * 10),
+    MAX_PENALTY,
+  );
 }
 
 export function evalUnrealisticRegistrationBehaviourPenalty(
@@ -260,7 +265,7 @@ function penaltyForAverageInterval(
    * Logarithmic scaling: more interactions strengthen the confidence in the user's
    * behavior pattern. Scales from 0 to 1, capping at 50 interactions.
    */
-  const scaling = Math.min(1, Math.log(count + 1) / Math.log(50));
+  const scaling = Math.min(1, Math.log(count + 1) / Math.log(100));
 
   // Final penalty is a product of severity, scaling, and the configured penalty cap
   return Math.round(penaltyCap * severity * scaling);

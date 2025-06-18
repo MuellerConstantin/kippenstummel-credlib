@@ -9,7 +9,7 @@ import {
   generateSpamBehaviour,
 } from './profiles';
 
-describe('CredibilitySimulation', () => {
+describe('ProfileSimulation', () => {
   const simulateProfile = (
     name: string,
     profileGenerator: () => BehaviourInfo,
@@ -43,8 +43,14 @@ describe('CredibilitySimulation', () => {
       credibilities.push(credibility);
     }
 
+    if (!fs.existsSync(path.resolve(__dirname, './results'))) {
+      fs.mkdirSync(path.resolve(__dirname, './results'), {
+        recursive: true,
+      });
+    }
+
     fs.writeFileSync(
-      path.resolve(__dirname, `./trace-${name}.json`),
+      path.resolve(__dirname, `./results/profile-${name}.json`),
       JSON.stringify(
         results.map((result) => ({
           ...result,
@@ -64,23 +70,23 @@ describe('CredibilitySimulation', () => {
 
   describe('simulate', () => {
     it('Should run normal user simulation successfully"', () => {
-      simulateProfile('normal', generateNormalBehaviour, 5000);
+      simulateProfile('normal', generateNormalBehaviour, 10000);
     });
 
     it('Should run bot simulation successfully"', () => {
-      simulateProfile('bot', generateBotBehaviour, 5000);
+      simulateProfile('bot', generateBotBehaviour, 10000);
     });
 
     it('Should run spam user simulation successfully"', () => {
-      simulateProfile('spam', generateSpamBehaviour, 5000);
+      simulateProfile('spam', generateSpamBehaviour, 10000);
     });
 
     it('Should run newbie user simulation successfully"', () => {
-      simulateProfile('newbie', generateNewbieBehaviour, 5000);
+      simulateProfile('newbie', generateNewbieBehaviour, 10000);
     });
 
     it('Should run power user simulation successfully"', () => {
-      simulateProfile('power', generatePowerBehaviour, 5000);
+      simulateProfile('power', generatePowerBehaviour, 10000);
     });
   });
 });

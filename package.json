@@ -19,7 +19,7 @@
     "lint": "eslint src --ext .ts",
     "format": "prettier --write \"src/**/*.ts\"",
     "test": "jest --testPathIgnorePatterns=\"/test/simulation\"",
-    "test:simulation": "jest test/simulation/simulation.spec.ts"
+    "test:simulation": "jest test/simulation"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
