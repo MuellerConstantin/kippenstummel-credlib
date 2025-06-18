@@ -109,7 +109,7 @@ export function generateNewbieBehaviour(): BehaviourInfo {
   const averageVotingInterval = crypto.randomInt(0, 1000 * 60 * 60 * 24);
 
   return {
-    credibility: 0,
+    credibility: crypto.randomInt(40, 60),
     issuedAt: new Date(issuedAt),
     lastInteractionAt: new Date(lastInteractionAt),
     averageInteractionInterval: averageInterval,
