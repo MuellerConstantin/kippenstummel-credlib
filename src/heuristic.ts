@@ -8,10 +8,7 @@ export function computeCredibility(
   const rules = new Map<string, (info: BehaviourInfo) => number>();
   let score: number = 100;
 
-  rules.set(
-    'unrealisticMovementCountPenalty',
-    evalUnrealisticMovementCountPenalty,
-  );
+  rules.set('unrealisticMovementPenalty', evalUnrealisticMovementPenalty);
   rules.set(
     'unrealisticRegistrationBehaviourPenalty',
     evalUnrealisticRegistrationBehaviourPenalty,
@@ -51,20 +48,22 @@ export function computeCredibility(
 }
 
 /**
- * Calculates the penalty for the number of unrealistic movement counts.
+ * Calculates the penalty for unrealistic movement behavior.
+ *
+ * Instead of using an absolute count (which only grows),
+ * this version uses a time-decayed EWMA score between 0 and 1.
  *
  * @param info The behavioral information.
  * @returns The penalty score.
  */
-export function evalUnrealisticMovementCountPenalty(info: BehaviourInfo) {
+export function evalUnrealisticMovementPenalty(info: BehaviourInfo) {
   const MAX_PENALTY = 50;
-  const count = info.unrealisticMovementCount;
 
-  if (count <= 0) return 0;
+  const score = info.unrealisticMovementScore ?? 0;
 
-  const penalty = Math.round(Math.exp(count) + 5);
+  if (score <= 0) return 0;
 
-  return -Math.min(penalty, MAX_PENALTY);
+  return -Math.round(score * MAX_PENALTY);
 }
 
 /**

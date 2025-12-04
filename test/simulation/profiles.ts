@@ -67,7 +67,7 @@ export function generateNormalBehaviour(): BehaviourInfo {
     lastInteractionAt: new Date(lastInteractionAt),
     averageInteractionInterval: averageInterval,
     lastInteractionPosition: randomPositionNearby({ lat: 48.1, lon: 11.6 }, 2),
-    unrealisticMovementCount: 0,
+    unrealisticMovementScore: 0,
     voting: {
       totalCount: voteInteractions,
       upvoteCount,
@@ -114,7 +114,7 @@ export function generateNewbieBehaviour(): BehaviourInfo {
     lastInteractionAt: new Date(lastInteractionAt),
     averageInteractionInterval: averageInterval,
     lastInteractionPosition: randomPositionNearby({ lat: 48.1, lon: 11.6 }, 2),
-    unrealisticMovementCount: 0,
+    unrealisticMovementScore: 0,
     voting: {
       totalCount: voteInteractions,
       upvoteCount,
@@ -166,7 +166,7 @@ export function generatePowerBehaviour(): BehaviourInfo {
     lastInteractionAt: new Date(lastInteractionAt),
     averageInteractionInterval: averageInterval,
     lastInteractionPosition: randomPositionNearby({ lat: 48.1, lon: 11.6 }, 2),
-    unrealisticMovementCount: 0,
+    unrealisticMovementScore: 0,
     voting: {
       totalCount: voteInteractions,
       upvoteCount,
@@ -189,7 +189,7 @@ export function generateBotBehaviour(): BehaviourInfo {
 
   const type = ['vote', 'registration'][crypto.randomInt(0, 1)];
 
-  const unrealisticMovementCount = crypto.randomInt(50, 750);
+  const unrealisticMovementScore = crypto.randomInt(600, 1000) / 1000;
 
   let voteInteractions: number;
   let upvoteCount: number;
@@ -256,7 +256,7 @@ export function generateBotBehaviour(): BehaviourInfo {
     lastInteractionAt: new Date(lastInteractionAt),
     averageInteractionInterval: averageInterval,
     lastInteractionPosition: randomPositionWorldwide(),
-    unrealisticMovementCount,
+    unrealisticMovementScore,
     voting: {
       totalCount: voteInteractions,
       upvoteCount,
@@ -279,7 +279,7 @@ export function generateSpamBehaviour(): BehaviourInfo {
 
   const type = ['vote', 'registration'][crypto.randomInt(0, 1)];
 
-  const unrealisticMovementCount = crypto.randomInt(0, 100);
+  const unrealisticMovementScore = crypto.randomInt(0, 1000) / 1000;
 
   let voteInteractions: number;
   let upvoteCount: number;
@@ -346,7 +346,7 @@ export function generateSpamBehaviour(): BehaviourInfo {
     lastInteractionAt: new Date(lastInteractionAt),
     averageInteractionInterval: averageInterval,
     lastInteractionPosition: randomPositionWorldwide(),
-    unrealisticMovementCount,
+    unrealisticMovementScore,
     voting: {
       totalCount: voteInteractions,
       upvoteCount,
